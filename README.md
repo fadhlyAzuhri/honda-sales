@@ -44,8 +44,8 @@ Supaya bisa ganti brosur dari web, butuh *token* GitHub:
 
 1. Buka web → **⚙**
 2. Isi **Periode** (misal `Desember 2026`)
-3. Ketuk kotak **Brosur 1** & **Brosur 2** → pilih foto brosur baru
-4. **Upload & Terbitkan** → tunggu ±1–2 menit, semua yang buka web melihat brosur baru.
+3. Tekan **📷 Pilih 2 foto brosur sekaligus** → pilih kedua foto (cek urutannya; salah urut → *tukar urutan 1↔2*)
+4. **Simpan & Terbitkan Brosur** → tunggu ±1–2 menit, semua yang buka web melihat brosur baru.
 
 **Lalu perbarui data angsuran** (supaya *Cari harga* & isi otomatis ikut bulan baru):
 1. Kirim 2 foto brosur baru ke Claude, tulis: *"buatkan harga.json untuk web sales Honda,

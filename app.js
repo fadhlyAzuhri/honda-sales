@@ -628,12 +628,29 @@
     });
     $("#hargaBadge").textContent = state.harga.items.length ? `${state.harga.items.length} tipe · ${state.harga.periode || "?"}` : "belum ada";
   }
+  function setPick(i, f) {
+    const slot = $$(".slot")[i];
+    picks[i] = f;
+    if (f) { $("img", slot).src = URL.createObjectURL(f); slot.classList.add("has", "new"); $("small", slot).textContent = "foto baru ✓"; }
+  }
   $$(".slot").forEach((slot, i) => {
-    $("input", slot).addEventListener("change", e => {
-      const f = e.target.files[0]; if (!f) return;
-      picks[i] = f; $("img", slot).src = URL.createObjectURL(f);
-      slot.classList.add("has", "new"); $("small", slot).textContent = "foto baru ✓";
-    });
+    $("input", slot).addEventListener("change", e => { const f = e.target.files[0]; e.target.value = ""; if (f) setPick(i, f); });
+  });
+  $("#pick2").addEventListener("change", e => {
+    const fs = Array.from(e.target.files || []).filter(f => /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic)$/i.test(f.name));
+    e.target.value = "";
+    if (!fs.length) return;
+    fs.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+    setPick(0, fs[0]); if (fs[1]) setPick(1, fs[1]);
+    toast(fs.length >= 2 ? "2 foto dipilih ✓ — cek urutannya, lalu Simpan" : "1 foto dipilih (Brosur 1)");
+  });
+  $("#btnSwap").addEventListener("click", () => {
+    const [a, b] = picks;
+    if (!a && !b) return toast("Pilih foto dulu");
+    const slots = $$(".slot"), srcA = $("img", slots[0]).src, srcB = $("img", slots[1]).src;
+    picks[0] = b; picks[1] = a;
+    $("img", slots[0]).src = srcB; $("img", slots[1]).src = srcA;
+    slots.forEach((s, i) => { s.classList.toggle("new", !!picks[i]); $("small", s).textContent = picks[i] ? "foto baru ✓" : "ketuk untuk pilih foto"; });
   });
   $("#btnGhSave").addEventListener("click", async () => {
     const s = { owner: $("#ghOwner").value.trim(), repo: $("#ghRepo").value.trim(), token: $("#ghToken").value.trim(), branch: "" };
@@ -648,10 +665,14 @@
   });
   $("#btnUpload").addEventListener("click", async () => {
     const g = ghCfg();
-    if (!g.token || !g.owner || !g.repo) { toast("Sambungkan GitHub dulu (langkah 1)"); return; }
+    if (!g.token || !g.owner || !g.repo) {
+      toast("Isi token GitHub dulu (langkah 1)");
+      $("#ghCard").scrollIntoView({ behavior: "smooth" }); $("#ghToken").focus(); return;
+    }
     const periode = $("#admPeriode").value.trim() || state.brosur.periode;
     if (!picks[0] && !picks[1] && periode === state.brosur.periode) { toast("Pilih foto brosur baru dulu"); return; }
-    const btn = $("#btnUpload"); btn.disabled = true; log("Mulai upload…", true);
+    const btn = $("#btnUpload"); btn.disabled = true; btn.textContent = "Menyimpan…"; log("Mulai upload…", true);
+    admLog.scrollIntoView({ behavior: "smooth", block: "center" });
     try {
       const files = state.brosur.files.length >= 2 ? state.brosur.files.slice(0, 2) : DEFAULT_FILES.slice(), newBlobs = [];
       for (let i = 0; i < 2; i++) {
@@ -671,7 +692,7 @@
         log(`ℹ Jangan lupa perbarui Data harga & angsuran (masih ${state.harga.periode}) di langkah 3.`);
       toast("Brosur terbit ✓");
     } catch (e) { log("✗ Gagal: " + explain(e)); }
-    finally { btn.disabled = false; }
+    finally { btn.disabled = false; btn.textContent = "Simpan & Terbitkan Brosur"; }
   });
 
   $("#fileHarga").addEventListener("change", async e => {

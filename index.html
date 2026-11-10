@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#cc0000">
 <title>Sales Honda — Harga & Data Konsumen</title>
-<link rel="stylesheet" href="style.css">
-<script src="config.js"></script>
+<link rel="stylesheet" href="style.css?v=3">
+<script src="config.js?v=3"></script>
 </head>
 <body>
 
@@ -165,12 +165,17 @@
     <div class="card">
       <h3>2 · Ganti foto brosur</h3>
       <label class="f"><span>Periode</span><input id="admPeriode" placeholder="Desember 2026"></label>
+      <label class="btn btn-ghost btn-block center pick2">📷 Pilih 2 foto brosur sekaligus<input type="file" id="pick2" accept="image/*" multiple hidden></label>
+      <p class="hint center">atau ketuk kotak di bawah untuk ganti satu per satu ·
+        <button type="button" class="link" id="btnSwap">tukar urutan 1↔2</button></p>
       <div class="slots">
         <label class="slot" data-slot="0"><img alt=""><span>Brosur 1<br><small>ketuk untuk pilih foto</small></span><input type="file" accept="image/*" hidden></label>
         <label class="slot" data-slot="1"><img alt=""><span>Brosur 2<br><small>ketuk untuk pilih foto</small></span><input type="file" accept="image/*" hidden></label>
       </div>
-      <button class="btn btn-block" id="btnUpload" type="button">Upload &amp; Terbitkan</button>
+      <button class="btn btn-block" id="btnUpload" type="button">Simpan &amp; Terbitkan Brosur</button>
     </div>
+
+    <pre class="log" id="admLog" hidden></pre>
 
     <div class="card">
       <h3>3 · Data harga &amp; angsuran <span class="badge" id="hargaBadge">—</span></h3>
@@ -181,8 +186,8 @@
       <button class="btn btn-block" id="btnHarga" type="button" disabled>Terbitkan Data Harga</button>
     </div>
 
-    <pre class="log" id="admLog" hidden></pre>
     <button class="btn btn-ghost btn-block" type="button" data-goto="harga">← Kembali</button>
+    <p class="hint center">Versi web: 3</p>
   </section>
 </main>
 
@@ -213,6 +218,16 @@
   <option>Hitam</option><option>Putih</option><option>Merah</option><option>Abu-abu</option><option>Biru</option><option>Hijau</option><option>Coklat</option><option>Cream</option><option>Silver</option><option>Hitam Doff</option>
 </datalist>
 
-<script src="app.js"></script>
+<div id="errBar" hidden></div>
+<script>
+  // tampilkan error (mis. file lama/tidak lengkap) supaya tidak diam saja
+  window.addEventListener("error", function (e) {
+    var t = e.target, b = document.getElementById("errBar");
+    if (!b || (t && t !== window && t.tagName !== "SCRIPT" && t.tagName !== "LINK")) return;
+    b.hidden = false;
+    b.textContent = "⚠ Ada error: " + (e.message || "skrip gagal dimuat") + " — tekan Ctrl+F5 / tarik untuk refresh. Kalau tetap, pastikan semua file terbaru sudah diupload.";
+  }, true);
+</script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
