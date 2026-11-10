@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#cc0000">
+<title>Sales Honda — Harga & Data Konsumen</title>
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="wing" aria-hidden="true">H</span>
+    <div>
+      <b id="dealerName">Honda</b>
+      <small>Sales Kit · <span id="periodeTop">—</span></small>
+    </div>
+  </div>
+  <button class="icon-btn" id="btnAdmin" title="Update brosur" aria-label="Update brosur">⚙</button>
+</header>
+
+<main>
+  <!-- ============ HARGA ============ -->
+  <section class="tab" id="tab-harga">
+    <div class="periode-card">
+      <div>
+        <small>Daftar harga &amp; angsuran</small>
+        <b id="periodeText">—</b>
+      </div>
+      <button class="btn btn-ghost" id="btnShare">Bagikan</button>
+    </div>
+    <div id="brosurList" class="brosur-list"></div>
+    <p class="hint center">Ketuk brosur untuk memperbesar · harga dapat berubah sewaktu-waktu</p>
+    <a class="contact" id="contactCard" target="_blank" rel="noopener">
+      <span class="wa-dot">WA</span>
+      <span><small>Hubungi sales</small><b id="contactText">—</b></span>
+    </a>
+  </section>
+
+  <!-- ============ KONSUMEN ============ -->
+  <section class="tab" id="tab-konsumen" hidden>
+    <form id="form" autocomplete="off" novalidate>
+      <div class="reg-row">
+        <label class="f grow"><span>Reg</span><input name="reg" id="reg"></label>
+        <label class="f w-sales"><span>Sales</span><input name="sales"></label>
+      </div>
+      <div class="edit-flag" id="editFlag" hidden>Sedang mengedit data tersimpan · <button type="button" class="link" id="btnCancelEdit">batal</button></div>
+
+      <h3>Konsumen</h3>
+      <label class="f"><span>Pemohon</span><input name="pemohon" autocapitalize="words" required></label>
+      <label class="f"><span>Alamat</span><input name="alamat"></label>
+      <div class="f">
+        <span>Status Rumah</span>
+        <div class="chips" data-for="statusRumah">
+          <button type="button">Milik Sendiri</button><button type="button">Orang Tua</button><button type="button">Keluarga</button><button type="button">Kontrak</button><button type="button">KOS</button><button type="button">Dinas</button>
+        </div>
+        <input name="statusRumah" class="mt" placeholder="atau ketik…">
+      </div>
+      <div class="row2">
+        <label class="f"><span>Pekerjaan</span><input name="pekerjaan" list="dlKerja"></label>
+        <label class="f"><span>No. HP</span><input name="hp" inputmode="tel" type="tel"></label>
+      </div>
+      <label class="f">
+        <span class="lbl-row">Nama STNK <label class="check"><input type="checkbox" name="stnkSama" checked> sama dgn pemohon</label></span>
+        <input name="stnk">
+      </label>
+
+      <h3>Unit &amp; Kredit</h3>
+      <label class="f"><span>Type</span><input name="tipe" list="dlTipe" placeholder="ketik / pilih…"></label>
+      <div class="row2">
+        <label class="f"><span>Warna</span><input name="warna" list="dlWarna"></label>
+        <label class="f"><span>Rakitan</span><input name="rakitan" inputmode="numeric" maxlength="4"></label>
+      </div>
+      <div class="row2">
+        <label class="f"><span>OTR</span><input name="otr" class="num" inputmode="numeric"></label>
+        <label class="f"><span>DP Unit</span><input name="dp" class="num" inputmode="numeric"></label>
+      </div>
+      <div class="row3">
+        <label class="f"><span>Tenor</span>
+          <select name="tenor">
+            <option value="">–</option>
+            <option>11</option><option>12</option><option>17</option><option>18</option><option>22</option><option>23</option><option>24</option><option>28</option><option>29</option><option>30</option><option>34</option><option>35</option><option>36</option><option>40</option><option>42</option><option>46</option><option>48</option><option>54</option><option>60</option>
+          </select>
+        </label>
+        <label class="f"><span>Angsuran</span><input name="angsuran" class="num" inputmode="numeric"></label>
+        <label class="f"><span>Nego</span><input name="nego" placeholder="25rb"></label>
+      </div>
+      <div class="row2">
+        <label class="f"><span>SCP</span><input name="scp" class="num" inputmode="numeric"></label>
+        <label class="f"><span>Extra Disc.</span><input name="extra" class="num" inputmode="numeric"></label>
+      </div>
+
+      <div class="preview-head"><h3>Hasil</h3><span class="hint" id="saveState"></span></div>
+      <pre id="preview" class="preview"></pre>
+    </form>
+
+    <div class="actionbar">
+      <button class="btn btn-ghost" id="btnNew" type="button">+ Baru</button>
+      <button class="btn btn-ghost" id="btnCopy" type="button">Salin</button>
+      <button class="btn btn-ghost" id="btnSave" type="button">Simpan</button>
+      <button class="btn btn-wa" id="btnWa" type="button">Kirim WA</button>
+    </div>
+  </section>
+
+  <!-- ============ RIWAYAT ============ -->
+  <section class="tab" id="tab-riwayat" hidden>
+    <div class="hist-tools">
+      <input id="histSearch" type="search" placeholder="Cari nama / tipe / no HP / reg…">
+    </div>
+    <div class="hist-meta"><span id="histCount"></span>
+      <span>
+        <button class="link" id="btnCsv">Excel (CSV)</button> ·
+        <button class="link" id="btnBackup">Backup</button> ·
+        <label class="link">Pulihkan<input type="file" id="fileRestore" accept="application/json,.json" hidden></label>
+      </span>
+    </div>
+    <div id="histList"></div>
+    <p class="hint center">Data konsumen hanya tersimpan di HP ini (tidak ikut online). Rutin tekan <b>Backup</b>.</p>
+  </section>
+
+  <!-- ============ ADMIN ============ -->
+  <section class="tab" id="tab-admin" hidden>
+    <h2>Update Brosur</h2>
+
+    <div class="card" id="ghCard">
+      <h3>1 · Sambungkan ke GitHub <span class="badge" id="ghBadge">belum</span></h3>
+      <p class="hint">Cukup sekali per HP. Token disimpan hanya di HP ini.</p>
+      <div class="row2">
+        <label class="f"><span>Username GitHub</span><input id="ghOwner" autocapitalize="off"></label>
+        <label class="f"><span>Nama repo</span><input id="ghRepo" autocapitalize="off"></label>
+      </div>
+      <label class="f"><span>Token</span><input id="ghToken" type="password" placeholder="github_pat_…" autocapitalize="off"></label>
+      <div class="btn-row">
+        <button class="btn" id="btnGhSave" type="button">Simpan &amp; Tes</button>
+        <button class="btn btn-ghost" id="btnGhForget" type="button">Lupakan token</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2 · Ganti foto brosur</h3>
+      <label class="f"><span>Periode</span><input id="admPeriode" placeholder="Desember 2026"></label>
+      <div class="slots">
+        <label class="slot" data-slot="0"><img alt=""><span>Brosur 1<br><small>ketuk untuk pilih foto</small></span><input type="file" accept="image/*" hidden></label>
+        <label class="slot" data-slot="1"><img alt=""><span>Brosur 2<br><small>ketuk untuk pilih foto</small></span><input type="file" accept="image/*" hidden></label>
+      </div>
+      <button class="btn btn-block" id="btnUpload" type="button">Upload &amp; Terbitkan</button>
+    </div>
+
+    <div class="card">
+      <h3>3 · Daftar tipe &amp; OTR <small class="hint">(opsional)</small></h3>
+      <p class="hint">Dipakai untuk isi otomatis OTR di form. Format per baris: <code>Nama tipe | 25.537.000</code></p>
+      <textarea id="admMotor" rows="10" spellcheck="false"></textarea>
+      <button class="btn btn-block" id="btnMotor" type="button">Simpan Daftar Tipe</button>
+    </div>
+
+    <pre class="log" id="admLog" hidden></pre>
+    <button class="btn btn-ghost btn-block" type="button" data-goto="harga">← Kembali</button>
+  </section>
+</main>
+
+<nav class="nav">
+  <button data-tab="harga"><i style="font-size:15px;font-weight:800">Rp</i>Harga</button>
+  <button data-tab="konsumen"><i>✎</i>Konsumen</button>
+  <button data-tab="riwayat"><i>☰</i>Riwayat</button>
+</nav>
+
+<!-- Lightbox -->
+<div id="lb" hidden>
+  <div class="lb-bar">
+    <button data-z="-1" aria-label="Perkecil">−</button>
+    <span id="lbZoom">100%</span>
+    <button data-z="1" aria-label="Perbesar">+</button>
+    <button id="lbClose" class="lb-close">Tutup ✕</button>
+  </div>
+  <div class="lb-scroll" id="lbScroll"><img id="lbImg" alt="Brosur"></div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<datalist id="dlTipe"></datalist>
+<datalist id="dlKerja">
+  <option>Karyawan Swasta</option><option>Wiraswasta</option><option>PNS</option><option>TNI/Polri</option><option>Mahasiswa</option><option>Pelajar</option><option>Ibu Rumah Tangga</option><option>Nelayan</option><option>Buruh</option><option>Pedagang</option><option>Honorer</option><option>Driver Online</option>
+</datalist>
+<datalist id="dlWarna">
+  <option>Hitam</option><option>Putih</option><option>Merah</option><option>Abu-abu</option><option>Biru</option><option>Hijau</option><option>Coklat</option><option>Cream</option><option>Silver</option><option>Hitam Doff</option>
+</datalist>
+
+<script src="app.js"></script>
+</body>
+</html>
