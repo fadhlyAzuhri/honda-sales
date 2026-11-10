@@ -15,7 +15,7 @@ Web gratis di GitHub Pages untuk:
    - Repository name: `honda-sales`
    - Pilih **Public** → **Create repository**.
 3. **Upload file**: ekstrak zip dulu, lalu di halaman repo tekan **uploading an existing file**
-   → pilih **semua file** (index.html, app.js, style.css, config.js, brosur.json, motor.json,
+   → pilih **semua file** (index.html, app.js, style.css, config.js, brosur.json, harga.json,
    brosur-1.jpg, brosur-2.jpg, README.md) → **Commit changes**.
 4. **Aktifkan web**: di repo buka **Settings → Pages**
    - Source: **Deploy from a branch**
@@ -47,10 +47,33 @@ Supaya bisa ganti brosur dari web, butuh *token* GitHub:
 3. Ketuk kotak **Brosur 1** & **Brosur 2** → pilih foto brosur baru
 4. **Upload & Terbitkan** → tunggu ±1–2 menit, semua yang buka web melihat brosur baru.
 
-Opsional: perbarui **Daftar tipe & OTR** (dipakai untuk isi OTR otomatis di form) lalu
-**Simpan Daftar Tipe**. Format per baris: `New Scoopy Prestige/Stylish | 25.537.000`
+**Lalu perbarui data angsuran** (supaya *Cari harga* & isi otomatis ikut bulan baru):
+1. Kirim 2 foto brosur baru ke Claude, tulis: *"buatkan harga.json untuk web sales Honda,
+   format sama seperti sebelumnya"* (lampirkan juga file `harga.json` lama sebagai contoh format).
+2. Unduh `harga.json` yang dibuat Claude.
+3. Web → **⚙** → **3 · Data harga & angsuran** → pilih file itu → **Terbitkan Data Harga**.
 
-## D. Data konsumen
+Kalau data angsuran belum diperbarui, tab Harga menampilkan peringatan kuning
+bahwa periodenya beda dengan brosur.
+
+### Format harga.json (untuk referensi)
+- Angka DP, diskon, angsuran dalam **ribuan** (2.000 = 2000). OTR dalam rupiah penuh.
+- Tiap tipe: `tipe`, `grup`, `otr`, `diskon`, `diskonKet`, `bonus`, `tenor` (daftar tenor),
+  `bayar` (jika tenor dicoret, mis. 24 → bayar 22), `ketTenor` (tulisan di atas tenor, mis. "300RB"),
+  dan `rows`: `{ "dp": DP normal, "promo": DP setelah diskon, "ang": [angsuran per tenor] }`.
+
+## D. Cari harga & isi form otomatis
+
+- Tab **Harga → Cari harga**: ketik misal `beat deluxe`, `scoopy`, `cbr250`. Muncul tabel
+  DP × tenor. Ketuk angka angsuran → **Pakai di form**.
+- Di form, ketik/pilih **Type** → muncul pilihan DP & tenor. Ketuk → OTR, DP, tenor,
+  angsuran, dan SCP/diskon terisi sendiri.
+- Tenor promo tercetak di teks: `Tenor : 24 bulan (bayar 22x)`.
+- Kalau ada SCP/Extra Discount, teks diberi baris tambahan `Dp Bayar : …` (DP − SCP − Extra).
+- DP yang tidak ada di tabel (mis. 3.000.000) → muncul **estimasi** angsuran; tekan *Pakai*
+  bila ingin dipakai (tetap konfirmasi ke leasing).
+
+## E. Data konsumen
 
 - Nomor Reg otomatis: `001/CDN-TPI/XI/2026`, naik sendiri dan mulai lagi dari 001 tiap bulan
   (tetap bisa diketik manual).
@@ -59,7 +82,7 @@ Opsional: perbarui **Daftar tipe & OTR** (dipakai untuk isi OTR otomatis di form
   (repo ini publik). Karena itu rutin tekan **Riwayat → Backup**; file backup bisa
   dipulihkan di HP lain lewat **Pulihkan**.
 
-## E. Ubah nama / nomor sales
+## F. Ubah nama / nomor sales
 
 Edit file `config.js` di GitHub (buka file → ikon pensil ✎ → Commit changes):
 nama dealer, nama sales, nomor HP, kode reg (`CDN-TPI`), dan nomor WA tujuan

@@ -29,10 +29,25 @@
         <small>Daftar harga &amp; angsuran</small>
         <b id="periodeText">—</b>
       </div>
-      <button class="btn btn-ghost" id="btnShare">Bagikan</button>
+      <button class="btn btn-ghost" id="btnShare">Bagikan brosur</button>
     </div>
-    <div id="brosurList" class="brosur-list"></div>
-    <p class="hint center">Ketuk brosur untuk memperbesar · harga dapat berubah sewaktu-waktu</p>
+    <div class="seg" role="tablist">
+      <button type="button" data-view="daftar" class="on">Cari harga</button>
+      <button type="button" data-view="brosur">Foto brosur</button>
+    </div>
+
+    <div id="viewDaftar">
+      <input id="cari" type="search" placeholder="Cari tipe… contoh: beat deluxe, scoopy, vario 160" autocomplete="off">
+      <div class="chips grup-chips" id="grupChips"></div>
+      <div class="stale" id="staleNote" hidden></div>
+      <div id="hargaList"></div>
+      <p class="hint center">Angka tabel dalam <b>ribuan</b> rupiah · ketuk angsuran untuk dipakai di form</p>
+    </div>
+
+    <div id="viewBrosur" hidden>
+      <div id="brosurList" class="brosur-list"></div>
+      <p class="hint center">Ketuk brosur untuk memperbesar · harga dapat berubah sewaktu-waktu</p>
+    </div>
     <a class="contact" id="contactCard" target="_blank" rel="noopener">
       <span class="wa-dot">WA</span>
       <span><small>Hubungi sales</small><b id="contactText">—</b></span>
@@ -69,6 +84,15 @@
 
       <h3>Unit &amp; Kredit</h3>
       <label class="f"><span>Type</span><input name="tipe" list="dlTipe" placeholder="ketik / pilih…"></label>
+      <div class="paket" id="paket" hidden>
+        <div class="paket-info" id="paketInfo"></div>
+        <span class="mini">Pilih DP <small>(normal → bayar)</small></span>
+        <div class="chips" id="dpChips"></div>
+        <span class="mini">Pilih tenor <small>(angsuran)</small></span>
+        <div class="chips" id="tenorChips"></div>
+        <div class="estimasi" id="estimasi" hidden></div>
+      </div>
+      <input type="hidden" name="bayar">
       <div class="row2">
         <label class="f"><span>Warna</span><input name="warna" list="dlWarna"></label>
         <label class="f"><span>Rakitan</span><input name="rakitan" inputmode="numeric" maxlength="4"></label>
@@ -88,7 +112,7 @@
         <label class="f"><span>Nego</span><input name="nego" placeholder="25rb"></label>
       </div>
       <div class="row2">
-        <label class="f"><span>SCP</span><input name="scp" class="num" inputmode="numeric"></label>
+        <label class="f"><span>SCP / Diskon</span><input name="scp" class="num" inputmode="numeric"></label>
         <label class="f"><span>Extra Disc.</span><input name="extra" class="num" inputmode="numeric"></label>
       </div>
 
@@ -149,10 +173,12 @@
     </div>
 
     <div class="card">
-      <h3>3 · Daftar tipe &amp; OTR <small class="hint">(opsional)</small></h3>
-      <p class="hint">Dipakai untuk isi otomatis OTR di form. Format per baris: <code>Nama tipe | 25.537.000</code></p>
-      <textarea id="admMotor" rows="10" spellcheck="false"></textarea>
-      <button class="btn btn-block" id="btnMotor" type="button">Simpan Daftar Tipe</button>
+      <h3>3 · Data harga &amp; angsuran <span class="badge" id="hargaBadge">—</span></h3>
+      <p class="hint">Dipakai untuk <b>Cari harga</b> dan isi otomatis form. Tiap ganti brosur: kirim 2 foto brosur ke Claude, minta
+        <i>"buatkan harga.json untuk web sales Honda"</i>, lalu pilih file itu di sini.</p>
+      <label class="btn btn-ghost btn-block center">Pilih file harga.json<input type="file" id="fileHarga" accept=".json,application/json" hidden></label>
+      <p class="hint" id="hargaCek"></p>
+      <button class="btn btn-block" id="btnHarga" type="button" disabled>Terbitkan Data Harga</button>
     </div>
 
     <pre class="log" id="admLog" hidden></pre>

@@ -1,3 +1,4 @@
+[hidden]{display:none!important}
 :root{
   --red:#cc0000; --red-d:#a30000; --ink:#1b1b1f; --mute:#6b6b75; --line:#e4e4ea;
   --bg:#f4f4f7; --card:#fff; --wa:#1fa855; --nav-h:62px; --radius:12px;
@@ -120,3 +121,51 @@ textarea{font:12.5px/1.5 ui-monospace,Menlo,monospace;resize:vertical}
 #toast.show{opacity:1;transform:translateX(-50%)}
 
 @media (min-width:700px){ .actionbar{border:1px solid var(--line);border-radius:14px 14px 0 0} }
+
+/* ---- cari harga ---- */
+.seg{display:flex;background:#e9e9ef;border-radius:11px;padding:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;padding:8px;border-radius:9px;font-weight:650;color:var(--mute);cursor:pointer}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+#cari{font-size:16px;padding:12px 13px;margin-bottom:9px}
+.grup-chips{margin-bottom:10px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.grup-chips::-webkit-scrollbar{display:none}
+.grup-chips button{flex:none}
+.stale{background:#fff6d6;border:1px solid #f0d27a;border-radius:9px;padding:8px 10px;font-size:13px;margin-bottom:10px}
+.hcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
+.hhead{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;border:0;background:none;padding:11px 13px;cursor:pointer}
+.hhead b{display:block;font-size:15px}
+.hhead small{color:var(--mute);font-size:12.5px}
+.hmeta{text-align:right;font-size:12px;color:var(--mute);white-space:nowrap}
+.hmeta b{color:var(--red);font-size:13.5px}
+.hcard.open .hhead{border-bottom:1px solid var(--line)}
+.hbody{padding:10px 0 12px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;padding:0 13px 9px}
+.tag{font-size:11.5px;background:#f0f0f4;border-radius:20px;padding:3px 9px}
+.tag.red{background:#ffe6e6;color:var(--red-d);font-weight:650}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 13px}
+.htbl{border-collapse:separate;border-spacing:0;font-size:13px;font-variant-numeric:tabular-nums;min-width:100%}
+.htbl th,.htbl td{padding:7px 7px;text-align:right;white-space:nowrap;border-bottom:1px solid #f0f0f3}
+.htbl th{font-size:11.5px;color:var(--mute);font-weight:650;vertical-align:bottom;background:#fafafb}
+.htbl th small{display:block;font-weight:500;font-size:10px;color:var(--red)}
+.htbl .dpc{position:sticky;left:0;background:#fff;text-align:left;font-weight:650;z-index:1}
+.htbl th.dpc{background:#fafafb}
+.htbl .pc{color:var(--red-d);font-weight:650;text-align:left}
+.htbl td.ac{padding:0}
+.htbl td.ac button{width:100%;border:0;background:none;padding:7px 7px;text-align:right;cursor:pointer;font:inherit;border-radius:6px}
+.htbl td.ac button:hover{background:#fff1f1}
+.htbl td.ac button.sel{background:var(--red);color:#fff;font-weight:700}
+.selbar{margin:10px 13px 0;background:#fff4f4;border:1px solid #ffd2d2;border-radius:10px;padding:9px 11px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px}
+.selbar b{font-size:14px}
+.selbar .btn{padding:9px 12px;font-size:13.5px}
+
+/* ---- paket di form ---- */
+.paket{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 11px 6px;margin:-2px 0 10px}
+.paket-info{font-size:12.5px;color:var(--mute);margin-bottom:6px}
+.paket-info b{color:var(--ink)}
+.mini{display:block;font-size:11.5px;font-weight:650;color:var(--mute);margin:6px 0 4px}
+.mini small{font-weight:400}
+.paket .chips{margin-bottom:4px}
+.paket .chips button{font-variant-numeric:tabular-nums;font-size:12.5px;padding:6px 9px}
+.paket .chips button small{opacity:.75;margin-left:3px}
+.estimasi{background:#fff6d6;border:1px solid #f0d27a;border-radius:9px;padding:7px 10px;font-size:12.5px;margin:6px 0 4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+input,select{scroll-margin-top:90px}
